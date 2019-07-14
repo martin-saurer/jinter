@@ -1,0 +1,7 @@
+LIBRARY   jinter
+
+EXPORTS   jinit   @1
+          jsend   @2
+          jrecv   @3
+          jstop   @4
+
