@@ -359,7 +359,7 @@ int jinit()
       DynLibrSize = (size_t)(strlen(ExeFilePath) + 32);
    }
    DynLibrPath = malloc(DynLibrSize);
-   sprintf(DynLibrPath,"%s:%s",DynLibrTemp,ExeFilePath);
+   status = snprintf(DynLibrPath,MAX_PATH,"%s:%s",DynLibrTemp,ExeFilePath);
    if(!strcmp(LIBEXT,"dylib"))
    {
       setenv("DYLD_LIBRARY_PATH",DynLibrPath,1);
@@ -372,7 +372,7 @@ int jinit()
 
    // Build full path of libj.so/dylib, assuming it's in the same directory
    // as this dll
-   sprintf(DllFileName,"%s/libj.%s",ExeFilePath,LIBEXT);
+   status = snprintf(DllFileName,MAX_PATH,"%s/libj.%s",ExeFilePath,LIBEXT);
    jdll = dlopen(DllFileName,RTLD_LAZY);
    if(!jdll)
    {
@@ -409,7 +409,7 @@ int jinit()
    }
 
    // Setup BINPATH_z_
-   sprintf(BINPATH_z_,"BINPATH_z_ =: '%s'",ExeFilePath);
+   status = snprintf(BINPATH_z_,MAX_PATH,"BINPATH_z_ =: '%s'",ExeFilePath);
    status = JDo(jt,BINPATH_z_);
    if(status!=0)
    {
@@ -418,7 +418,7 @@ int jinit()
    }
 
    // Run profile.ijs
-   sprintf(ProFileName,"0!:0 <'%s/profile.ijs'",ExeFilePath);
+   status = snprintf(ProFileName,MAX_PATH,"0!:0 <'%s/profile.ijs'",ExeFilePath);
    status = JDo(jt,ProFileName);
    if(status!=0)
    {
